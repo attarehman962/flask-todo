@@ -4,506 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Update Todo</title>
-    <!-- Apply theme BEFORE paint to avoid flash -->
+
     <script>
       (function () {
         var t = localStorage.getItem("tb-theme") || "dark";
         document.documentElement.setAttribute("data-theme", t);
       })();
     </script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
       rel="stylesheet"
     />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
 
-      :root,
-      [data-theme="dark"] {
-        --bg: #0a0a0f;
-        --surface: #111118;
-        --surface2: #1a1a24;
-        --border: rgba(255, 255, 255, 0.07);
-        --accent: #e8ff47;
-        --accent-rgb: 232, 255, 71;
-        --accent2: #ff4757;
-        --text: #f0f0f8;
-        --muted: #5a5a72;
-        --card-glow:
-          0 0 0 1px rgba(232, 255, 71, 0.08), 0 20px 60px rgba(0, 0, 0, 0.6);
-        --blob1: rgba(232, 255, 71, 0.04);
-        --blob2: rgba(255, 71, 87, 0.05);
-        --nav-bg: rgba(10, 10, 15, 0.85);
-        --icon-stroke: #0a0a0f;
-        --btn-text: #0a0a0f;
-      }
-
-      [data-theme="light"] {
-        --bg: #f4f4f0;
-        --surface: #ffffff;
-        --surface2: #ededea;
-        --border: rgba(0, 0, 0, 0.08);
-        --accent: #1a1a2e;
-        --accent-rgb: 26, 26, 46;
-        --accent2: #ff4757;
-        --text: #0a0a0f;
-        --muted: #888899;
-        --card-glow:
-          0 0 0 1px rgba(0, 0, 0, 0.05), 0 12px 40px rgba(0, 0, 0, 0.08);
-        --blob1: rgba(232, 255, 71, 0.3);
-        --blob2: rgba(255, 71, 87, 0.07);
-        --nav-bg: rgba(244, 244, 240, 0.9);
-        --icon-stroke: #f4f4f0;
-        --btn-text: #f4f4f0;
-      }
-
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: "DM Sans", sans-serif;
-        font-weight: 300;
-        min-height: 100vh;
-        overflow-x: hidden;
-        transition:
-          background 0.35s,
-          color 0.35s;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        top: -20%;
-        left: -10%;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, var(--blob1) 0%, transparent 70%);
-        pointer-events: none;
-        z-index: 0;
-        animation: drift 12s ease-in-out infinite alternate;
-        transition: background 0.35s;
-      }
-      body::after {
-        content: "";
-        position: fixed;
-        bottom: -20%;
-        right: -10%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, var(--blob2) 0%, transparent 70%);
-        pointer-events: none;
-        z-index: 0;
-        animation: drift 16s ease-in-out infinite alternate-reverse;
-        transition: background 0.35s;
-      }
-
-      @keyframes drift {
-        from {
-          transform: translate(0, 0) scale(1);
-        }
-        to {
-          transform: translate(40px, 30px) scale(1.1);
-        }
-      }
-
-      /* ── NAVBAR ── */
-      nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 48px;
-        height: 64px;
-        background: var(--nav-bg);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
-        transition:
-          background 0.35s,
-          border-color 0.35s;
-      }
-      .nav-brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
-      .nav-icon {
-        width: 28px;
-        height: 28px;
-        background: var(--accent);
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.35s;
-      }
-      .nav-icon svg {
-        width: 16px;
-        height: 16px;
-        stroke: var(--icon-stroke);
-        transition: stroke 0.35s;
-      }
-      .brand-text {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 22px;
-        letter-spacing: 2px;
-        color: var(--text);
-        transition: color 0.35s;
-      }
-      .nav-back {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        text-decoration: none;
-        font-size: 12px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: var(--muted);
-        transition: color 0.2s;
-      }
-      .nav-back:hover {
-        color: var(--accent);
-      }
-      .nav-back svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      /* ── PAGE ── */
-      .page {
-        position: relative;
-        z-index: 1;
-        max-width: 640px;
-        margin: 0 auto;
-        padding: 72px 24px 100px;
-      }
-
-      /* ── BREADCRUMB ── */
-      .breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 28px;
-        animation: slideUp 0.4s ease both;
-      }
-      .breadcrumb a {
-        color: var(--muted);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-      .breadcrumb a:hover {
-        color: var(--accent);
-      }
-      .breadcrumb .sep {
-        opacity: 0.3;
-      }
-      .breadcrumb .current {
-        color: var(--accent);
-        transition: color 0.35s;
-      }
-
-      /* ── FORM CARD ── */
-      .form-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 44px;
-        box-shadow: var(--card-glow);
-        animation: slideUp 0.5s 0.05s ease both;
-        transition:
-          background 0.35s,
-          border-color 0.35s,
-          box-shadow 0.35s;
-      }
-
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .card-header-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        margin-bottom: 36px;
-        gap: 16px;
-      }
-      .form-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 46px;
-        letter-spacing: 2px;
-        line-height: 1;
-      }
-      .form-title span {
-        color: var(--accent);
-        transition: color 0.35s;
-      }
-      .form-subtitle {
-        font-size: 13px;
-        color: var(--muted);
-        margin-top: 6px;
-        transition: color 0.35s;
-      }
-
-      .edit-badge {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(var(--accent-rgb), 0.07);
-        border: 1px solid rgba(var(--accent-rgb), 0.18);
-        border-radius: 20px;
-        padding: 6px 14px;
-        font-size: 11px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: var(--accent);
-        white-space: nowrap;
-        flex-shrink: 0;
-        margin-top: 4px;
-        transition:
-          background 0.35s,
-          border-color 0.35s,
-          color 0.35s;
-      }
-      .edit-badge::before {
-        content: "";
-        width: 6px;
-        height: 6px;
-        background: var(--accent);
-        border-radius: 50%;
-        animation: pulse 2s ease-in-out infinite;
-        transition: background 0.35s;
-      }
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.4;
-          transform: scale(0.7);
-        }
-      }
-
-      .divider {
-        height: 1px;
-        background: var(--border);
-        margin-bottom: 36px;
-        transition: background 0.35s;
-      }
-
-      .field-group {
-        margin-bottom: 28px;
-      }
-
-      label {
-        display: block;
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 10px;
-        transition: color 0.35s;
-      }
-
-      input[type="text"],
-      textarea {
-        width: 100%;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        color: var(--text);
-        font-family: "DM Sans", sans-serif;
-        font-size: 15px;
-        font-weight: 300;
-        padding: 14px 18px;
-        outline: none;
-        resize: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s,
-          background 0.35s,
-          color 0.35s;
-      }
-      input[type="text"]::placeholder,
-      textarea::placeholder {
-        color: var(--muted);
-      }
-      input[type="text"]:focus,
-      textarea:focus {
-        border-color: rgba(var(--accent-rgb), 0.4);
-        box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.06);
-      }
-
-      .actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 36px;
-        padding-top: 28px;
-        border-top: 1px solid var(--border);
-        transition: border-color 0.35s;
-      }
-
-      .btn-submit {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: var(--accent);
-        color: var(--btn-text);
-        border: none;
-        border-radius: 10px;
-        font-family: "DM Sans", sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: 14px 28px;
-        cursor: pointer;
-        transition:
-          transform 0.15s,
-          box-shadow 0.15s,
-          background 0.35s,
-          color 0.35s;
-        box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.25);
-      }
-      .btn-submit:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.35);
-      }
-      .btn-submit:active {
-        transform: translateY(0);
-      }
-      .btn-submit svg {
-        width: 15px;
-        height: 15px;
-      }
-
-      .btn-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-        background: transparent;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        color: var(--muted);
-        font-family: "DM Sans", sans-serif;
-        font-size: 13px;
-        font-weight: 400;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: 14px 22px;
-        transition:
-          border-color 0.2s,
-          color 0.2s;
-      }
-      .btn-back:hover {
-        border-color: rgba(255, 255, 255, 0.15);
-        color: var(--text);
-      }
-      .btn-back svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      /* ── THEME TOGGLE (small, in nav) ── */
-      .theme-toggle {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        user-select: none;
-      }
-      .toggle-label {
-        font-size: 11px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: var(--muted);
-        transition: color 0.35s;
-        min-width: 36px;
-        text-align: right;
-      }
-      .toggle-track {
-        width: 50px;
-        height: 28px;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        position: relative;
-        transition:
-          background 0.35s,
-          border-color 0.35s;
-      }
-      .toggle-thumb {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: var(--accent);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition:
-          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-          background 0.35s;
-      }
-      .toggle-thumb svg {
-        width: 10px;
-        height: 10px;
-        pointer-events: none;
-      }
-      [data-theme="light"] .toggle-thumb {
-        transform: translateX(22px);
-      }
-
-      @media (max-width: 600px) {
-        nav {
-          padding: 0 20px;
-        }
-        .form-card {
-          padding: 28px 22px;
-        }
-        .card-header-row {
-          flex-direction: column;
-        }
-        .form-title {
-          font-size: 36px;
-        }
-        .actions {
-          flex-direction: column;
-        }
-        .btn-submit,
-        .btn-back {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='update.css') }}"
+    />
   </head>
   <body>
-    <!-- NAVBAR -->
     <nav>
       <a class="nav-brand" href="/">
         <div class="nav-icon">
@@ -520,7 +39,6 @@
       </a>
 
       <div style="display: flex; align-items: center; gap: 20px">
-        <!-- THEME TOGGLE (syncs with index) -->
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
           <span class="toggle-label" id="toggle-label">Dark</span>
           <div class="toggle-track">
@@ -569,14 +87,12 @@
     </nav>
 
     <div class="page">
-      <!-- BREADCRUMB -->
       <div class="breadcrumb">
         <a href="/">Tasks</a>
         <span class="sep">›</span>
         <span class="current">Edit Task</span>
       </div>
 
-      <!-- FORM CARD -->
       <div class="form-card">
         <div class="card-header-row">
           <div>
@@ -599,12 +115,14 @@
               required
             />
           </div>
+
           <div class="field-group">
             <label for="desc">Description</label>
             <textarea id="desc" name="desc" rows="4" required>
 {{ todo.desc }}</textarea
             >
           </div>
+
           <div class="actions">
             <button type="submit" class="btn-submit">
               <svg
@@ -622,6 +140,7 @@
               </svg>
               Save Changes
             </button>
+
             <a href="/" class="btn-back">
               <svg
                 viewBox="0 0 16 16"
@@ -657,6 +176,7 @@
         const current = html.getAttribute("data-theme");
         applyTheme(current === "dark" ? "light" : "dark");
       }
+
       applyTheme(localStorage.getItem("tb-theme") || "dark");
     </script>
   </body>

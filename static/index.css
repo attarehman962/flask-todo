@@ -1,8 +1,3 @@
-/* ============================================================
-   Taskboard — shared stylesheet
-   Used by: base.html → index.html, update.html
-   ============================================================ */
-
 *,
 *::before,
 *::after {
@@ -11,7 +6,7 @@
   padding: 0;
 }
 
-/* ── DARK THEME (default) ── */
+/* DARK THEME */
 :root,
 [data-theme="dark"] {
   --bg: #0a0a0f;
@@ -32,7 +27,7 @@
   --btn-text: #0a0a0f;
 }
 
-/* ── LIGHT THEME ── */
+/* LIGHT THEME */
 [data-theme="light"] {
   --bg: #f4f4f0;
   --surface: #ffffff;
@@ -51,7 +46,6 @@
   --btn-text: #f4f4f0;
 }
 
-/* ── BASE ── */
 body {
   background: var(--bg);
   color: var(--text);
@@ -63,6 +57,7 @@ body {
     background 0.35s,
     color 0.35s;
 }
+
 body::before {
   content: "";
   position: fixed;
@@ -76,6 +71,7 @@ body::before {
   animation: drift 12s ease-in-out infinite alternate;
   transition: background 0.35s;
 }
+
 body::after {
   content: "";
   position: fixed;
@@ -98,29 +94,8 @@ body::after {
     transform: translate(40px, 30px) scale(1.1);
   }
 }
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(0.7);
-  }
-}
 
-/* ── NAVBAR ── */
+/* NAVBAR */
 nav {
   position: sticky;
   top: 0;
@@ -138,12 +113,14 @@ nav {
     background 0.35s,
     border-color 0.35s;
 }
+
 .nav-brand {
   display: flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
 }
+
 .nav-icon {
   width: 28px;
   height: 28px;
@@ -154,12 +131,14 @@ nav {
   justify-content: center;
   transition: background 0.35s;
 }
+
 .nav-icon svg {
   width: 16px;
   height: 16px;
   stroke: var(--icon-stroke);
   transition: stroke 0.35s;
 }
+
 .brand-text {
   font-family: "Bebas Neue", sans-serif;
   font-size: 22px;
@@ -167,31 +146,8 @@ nav {
   color: var(--text);
   transition: color 0.35s;
 }
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.nav-back {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.2s;
-}
-.nav-back:hover {
-  color: var(--accent);
-}
-.nav-back svg {
-  width: 14px;
-  height: 14px;
-}
 
-/* ── THEME TOGGLE ── */
+/* THEME TOGGLE */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -199,6 +155,7 @@ nav {
   cursor: pointer;
   user-select: none;
 }
+
 .toggle-label {
   font-size: 11px;
   letter-spacing: 1.5px;
@@ -208,6 +165,7 @@ nav {
   min-width: 36px;
   text-align: right;
 }
+
 .toggle-track {
   width: 50px;
   height: 28px;
@@ -219,6 +177,7 @@ nav {
     background 0.35s,
     border-color 0.35s;
 }
+
 .toggle-thumb {
   position: absolute;
   top: 4px;
@@ -234,16 +193,18 @@ nav {
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     background 0.35s;
 }
+
 .toggle-thumb svg {
   width: 10px;
   height: 10px;
   pointer-events: none;
 }
+
 [data-theme="light"] .toggle-thumb {
   transform: translateX(22px);
 }
 
-/* ── PAGE WRAPPER ── */
+/* PAGE */
 .page {
   position: relative;
   z-index: 1;
@@ -251,23 +212,22 @@ nav {
   margin: 0 auto;
   padding: 64px 24px 100px;
 }
-.page.narrow {
-  max-width: 640px;
-}
 
-/* ── SECTION LABEL ── */
+/* SECTION LABEL */
 .section-label {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 28px;
 }
+
 .section-label .line {
   flex: 1;
   height: 1px;
   background: var(--border);
   transition: background 0.35s;
 }
+
 .section-label span {
   font-size: 10px;
   letter-spacing: 3px;
@@ -277,7 +237,7 @@ nav {
   transition: color 0.35s;
 }
 
-/* ── FORM CARD ── */
+/* FORM CARD */
 .form-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -291,6 +251,18 @@ nav {
     border-color 0.35s,
     box-shadow 0.35s;
 }
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .form-title {
   font-family: "Bebas Neue", sans-serif;
   font-size: 42px;
@@ -298,10 +270,12 @@ nav {
   line-height: 1;
   margin-bottom: 8px;
 }
+
 .form-title span {
   color: var(--accent);
   transition: color 0.35s;
 }
+
 .form-subtitle {
   font-size: 13px;
   color: var(--muted);
@@ -309,10 +283,10 @@ nav {
   transition: color 0.35s;
 }
 
-/* ── FIELDS ── */
 .field-group {
   margin-bottom: 24px;
 }
+
 label {
   display: block;
   font-size: 11px;
@@ -322,6 +296,7 @@ label {
   margin-bottom: 10px;
   transition: color 0.35s;
 }
+
 input[type="text"],
 textarea {
   width: 100%;
@@ -341,17 +316,18 @@ textarea {
     background 0.35s,
     color 0.35s;
 }
+
 input[type="text"]::placeholder,
 textarea::placeholder {
   color: var(--muted);
 }
+
 input[type="text"]:focus,
 textarea:focus {
   border-color: rgba(var(--accent-rgb), 0.4);
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.06);
 }
 
-/* ── BUTTONS ── */
 .btn-submit {
   display: inline-flex;
   align-items: center;
@@ -374,91 +350,29 @@ textarea:focus {
     color 0.35s;
   box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.25);
 }
+
 .btn-submit:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.35);
 }
+
 .btn-submit:active {
   transform: translateY(0);
 }
+
 .btn-submit svg {
   width: 16px;
   height: 16px;
 }
 
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--muted);
-  font-family: "DM Sans", sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 14px 22px;
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-.btn-back:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--text);
-}
-.btn-back svg {
-  width: 14px;
-  height: 14px;
-}
-
-.btn-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 8px 14px;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.btn-update {
-  background: rgba(var(--accent-rgb), 0.08);
-  color: var(--accent);
-  border: 1px solid rgba(var(--accent-rgb), 0.2);
-}
-.btn-update:hover {
-  background: rgba(var(--accent-rgb), 0.15);
-  border-color: rgba(var(--accent-rgb), 0.4);
-}
-.btn-delete {
-  background: rgba(255, 71, 87, 0.07);
-  color: var(--accent2);
-  border: 1px solid rgba(255, 71, 87, 0.2);
-}
-.btn-delete:hover {
-  background: rgba(255, 71, 87, 0.14);
-  border-color: rgba(255, 71, 87, 0.4);
-}
-.btn-action svg {
-  width: 12px;
-  height: 12px;
-}
-
-/* ── STATS ── */
+/* STATS */
 .stats-row {
   display: flex;
   gap: 16px;
   margin-bottom: 28px;
   animation: slideUp 0.5s 0.1s ease both;
 }
+
 .stat-pill {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -471,6 +385,7 @@ textarea:focus {
     background 0.35s,
     border-color 0.35s;
 }
+
 .stat-num {
   font-family: "Bebas Neue", sans-serif;
   font-size: 28px;
@@ -478,6 +393,7 @@ textarea:focus {
   line-height: 1;
   transition: color 0.35s;
 }
+
 .stat-lbl {
   font-size: 11px;
   letter-spacing: 1.5px;
@@ -486,13 +402,14 @@ textarea:focus {
   transition: color 0.35s;
 }
 
-/* ── TODO CARDS ── */
+/* TODO CARDS */
 .todos-wrap {
   display: flex;
   flex-direction: column;
   gap: 12px;
   animation: slideUp 0.5s 0.15s ease both;
 }
+
 .todo-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -510,6 +427,7 @@ textarea:focus {
     box-shadow 0.2s,
     background 0.35s;
 }
+
 .todo-card::before {
   content: "";
   position: absolute;
@@ -524,14 +442,17 @@ textarea:focus {
     opacity 0.2s,
     background 0.35s;
 }
+
 .todo-card:hover {
   border-color: rgba(var(--accent-rgb), 0.2);
   transform: translateX(4px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
+
 .todo-card:hover::before {
   opacity: 1;
 }
+
 .todo-num {
   font-family: "Bebas Neue", sans-serif;
   font-size: 22px;
@@ -539,6 +460,7 @@ textarea:focus {
   text-align: center;
   transition: color 0.35s;
 }
+
 .todo-title {
   font-size: 16px;
   font-weight: 500;
@@ -546,6 +468,7 @@ textarea:focus {
   margin-bottom: 4px;
   transition: color 0.35s;
 }
+
 .todo-desc {
   font-size: 13px;
   color: var(--muted);
@@ -553,6 +476,7 @@ textarea:focus {
   line-height: 1.5;
   transition: color 0.35s;
 }
+
 .todo-meta {
   display: flex;
   align-items: center;
@@ -560,19 +484,65 @@ textarea:focus {
   font-size: 11px;
   color: var(--muted);
   letter-spacing: 0.5px;
+  transition: color 0.35s;
 }
+
 .todo-meta svg {
   width: 12px;
   height: 12px;
   opacity: 0.5;
 }
+
 .todo-actions {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-/* ── EMPTY STATE ── */
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-update {
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+}
+
+.btn-update:hover {
+  background: rgba(var(--accent-rgb), 0.15);
+  border-color: rgba(var(--accent-rgb), 0.4);
+}
+
+.btn-delete {
+  background: rgba(255, 71, 87, 0.07);
+  color: var(--accent2);
+  border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+.btn-delete:hover {
+  background: rgba(255, 71, 87, 0.14);
+  border-color: rgba(255, 71, 87, 0.4);
+}
+
+.btn-action svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* EMPTY STATE */
 .empty-state {
   text-align: center;
   padding: 72px 24px;
@@ -581,6 +551,7 @@ textarea:focus {
   animation: slideUp 0.5s 0.15s ease both;
   transition: border-color 0.35s;
 }
+
 .empty-icon {
   width: 64px;
   height: 64px;
@@ -595,11 +566,13 @@ textarea:focus {
     background 0.35s,
     border-color 0.35s;
 }
+
 .empty-icon svg {
   width: 28px;
   height: 28px;
   opacity: 0.3;
 }
+
 .empty-title {
   font-family: "Bebas Neue", sans-serif;
   font-size: 26px;
@@ -608,121 +581,32 @@ textarea:focus {
   margin-bottom: 8px;
   transition: color 0.35s;
 }
+
 .empty-sub {
   font-size: 13px;
   color: var(--muted);
   transition: color 0.35s;
 }
 
-/* ── UPDATE PAGE EXTRAS ── */
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 28px;
-  animation: slideUp 0.4s ease both;
-}
-.breadcrumb a {
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.breadcrumb a:hover {
-  color: var(--accent);
-}
-.breadcrumb .sep {
-  opacity: 0.3;
-}
-.breadcrumb .current {
-  color: var(--accent);
-  transition: color 0.35s;
-}
-.card-header-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 36px;
-  gap: 16px;
-}
-.edit-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(var(--accent-rgb), 0.07);
-  border: 1px solid rgba(var(--accent-rgb), 0.18);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--accent);
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: 4px;
-  transition:
-    background 0.35s,
-    border-color 0.35s,
-    color 0.35s;
-}
-.edit-badge::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-  transition: background 0.35s;
-}
-.divider {
-  height: 1px;
-  background: var(--border);
-  margin-bottom: 36px;
-  transition: background 0.35s;
-}
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
-  transition: border-color 0.35s;
-}
-
-/* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   nav {
     padding: 0 20px;
   }
+
   .form-card {
     padding: 28px 22px;
   }
+
   .todo-card {
     grid-template-columns: 28px 1fr;
   }
+
   .todo-actions {
     flex-direction: row;
-    grid-column: 1/-1;
+    grid-column: 1 / -1;
   }
+
   .stats-row {
     flex-wrap: wrap;
-  }
-  .card-header-row {
-    flex-direction: column;
-  }
-  .form-title {
-    font-size: 36px;
-  }
-  .actions {
-    flex-direction: column;
-  }
-  .btn-submit,
-  .btn-back {
-    width: 100%;
-    justify-content: center;
   }
 }
