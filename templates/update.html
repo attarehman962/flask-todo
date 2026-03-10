@@ -657,8 +657,6 @@
         const current = html.getAttribute("data-theme");
         applyTheme(current === "dark" ? "light" : "dark");
       }
-
-      // Sync from localStorage on load (already applied pre-paint above, this updates the UI labels)
       applyTheme(localStorage.getItem("tb-theme") || "dark");
     </script>
   </body>
